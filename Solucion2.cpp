@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include <chrono>
 #include <ctime>
 #include <ratio>
@@ -6,9 +6,11 @@
 using namespace std::chrono;
 using namespace std;
 
-
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[])
+{
     unsigned t0, t1;
+
+    t0 = clock();
 
     int n = atoi(argv[1]);
 
@@ -16,55 +18,72 @@ int main(int argc, char *argv[]){
     int *matriz2;
     int *result;
 
- 
-    t0=clock();
+    matriz1 = new int[n * n];
+    matriz2 = new int[n * n];
+    result = new int[n * n];
 
-    matriz1 = new int[n*n];
-    matriz2 = new int[n*n];
-    result = new int[n*n];
-
-    for(int index=0;index<n*n;index++){
-        matriz1[index] = rand() % 10;    
-        matriz2[index] = rand() % 10;
+    for (int index = 0; index < n * n; index++)
+    {
+        matriz1[index] = rand() % 100;
+        matriz2[index] = rand() % 100;
     }
 
-    for(int filaM2=0;filaM2<n;filaM2){
+    for (int i = 0; i < n; i++)
+    {
+        for (int fila = 0; fila < n; fila++)
+        {
             int suma = 0;
-            for(int col=0;col<n;col++){
-                // suma = suma + (matriz1[filaM1*n+col]*matriz2[col*n+filaM2]);
-                cout << matriz1[filaM2*n+col];
-                cout << matriz2[col*n+filaM2];
-
+            for (int col = 0; col < n; col++)
+            {
+                suma = suma + matriz1[i * n + col] * matriz2[col * n + fila];
             }
-            // result[filaM1*n+filaM2] = suma;
+            result[i * n + fila] = suma;
+        }
+    }
+
+    cout << "Matriz A" << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << matriz1[i * n + j] << " ";
         }
 
-    // for(int filaM1=0;filaM1<n;filaM1++){
+        cout << endl;
+    }
 
-    //     for(int filaM2=0;filaM2<n;filaM2){
-    //         int suma = 0;
-    //         for(int col=0;col<n;col++){
-    //             // suma = suma + (matriz1[filaM1*n+col]*matriz2[col*n+filaM2]);
-    //             cout << matriz1[filaM1*n+col];
-    //             cout << matriz2[col*n+filaM2];
+    cout << "Matriz B" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << matriz2[i * n + j] << " ";
+        }
 
-    //         }
-    //         // result[filaM1*n+filaM2] = suma;
-    //     }
-    // }
+        cout << endl;
+    }
 
-    // for(int i=0;i<n*n;i++){
-    //     cout << result[i];
-    // }
+    cout << "Resultado" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << result[i * n + j] << " ";
+        }
 
-    // Code to execute
+        cout << endl;
+    }
+
     t1 = clock();
 
-    double duracion = (double(t1-t0)/CLOCKS_PER_SEC);
-    
-    cout << n;
+    double duracion = (double(t1 - t0) / CLOCKS_PER_SEC);
+
+    cout << "Tiempo de ejecucion new: " << duracion;
+
+    delete[] matriz1;
+    delete[] matriz2;
+    delete[] result;
 
     return 0;
 }
-
-
